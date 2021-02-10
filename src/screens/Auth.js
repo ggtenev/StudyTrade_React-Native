@@ -7,13 +7,15 @@ import {
   Image,
   Button,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import Colors from "../constants/Colors";
 import firebase from "../constants/config";
 
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+
+
 
 export default function Auth() {
   const [loginMode, setLoginMode] = useState(false);
@@ -54,26 +56,25 @@ export default function Auth() {
       });
   };
 
-   //SIGN UP METHOD
-   const signUp = async () => {
-
+  //SIGN UP METHOD
+  const signUp = async () => {
     setIsLoading(true);
     if (!firstName || !lastName) {
       setError("Fill in all fields");
       setIsLoading(false);
       return;
-    } 
+    }
 
-//     else if (!email) {
-//       setError("Password doesn't match");
-//       setIsLoading(false);
-//       return;
-// }
-//  else if (!thought) {
-//       setError("You have to accept the Terms and Conditions");
-//       setIsLoading(false);
-//       return;
-//     }
+    //     else if (!email) {
+    //       setError("Password doesn't match");
+    //       setIsLoading(false);
+    //       return;
+    // }
+    //  else if (!thought) {
+    //       setError("You have to accept the Terms and Conditions");
+    //       setIsLoading(false);
+    //       return;
+    //     }
     //DISPATCHING SIGNUP ACTION TO FIREBASE
     firebase
       .auth()
@@ -81,13 +82,12 @@ export default function Auth() {
       .then(async (usercredentials) => {
         // console.log(usercredentials);
         // await AsyncStorage.setItem("userToken", usercredentials.user.uid);
+        await usercredentials.user.updateProfile({
+          displayName: `${firstName} ${lastName}`,
+        });
+
         await usercredentials.user
-          .updateProfile({
-            displayName: `${firstName} ${lastName}`,
-          })
-        
-          await usercredentials.user
-            .sendEmailVerification()
+          .sendEmailVerification()
 
           .then(function () {
             firebase
@@ -97,7 +97,7 @@ export default function Auth() {
               .set({
                 name: `${firstName} ${lastName}`,
                 email: email,
-                university
+                university,
               })
               .then(() => {
                 setIsLoading(false);
@@ -120,8 +120,8 @@ export default function Auth() {
       });
   };
 
-   //LOADING SPINNER WHILE SENDING REQUEST TO THE SERVER
-   if (isLoading) {
+  //LOADING SPINNER WHILE SENDING REQUEST TO THE SERVER
+  if (isLoading) {
     return (
       <View style={styles.activityIndicator}>
         <ActivityIndicator size='large' color='green' />
@@ -135,19 +135,36 @@ export default function Auth() {
         {/* <Image style={styles.img} source={require('../../assets/book.png')}/>
       <Text style={{fontSize:28,fontWeight:'bold',paddingBottom:60}}>Study Trade</Text> */}
         <Text style={styles.top}>First Name</Text>
-        <TextInput value={firstName} style={styles.input} onChangeText= {t=>setFirstName(t)} />
+        <TextInput
+          value={firstName}
+          style={styles.input}
+          onChangeText={(t) => setFirstName(t)}
+        />
         <Text style={styles.top}>Surname</Text>
-        <TextInput value={lastName} style={styles.input} onChangeText= {t=>setLastName(t)} />
+        <TextInput
+          value={lastName}
+          style={styles.input}
+          onChangeText={(t) => setLastName(t)}
+        />
         <Text style={styles.top}>University Email Address</Text>
-        <TextInput value={email} style={styles.input} onChangeText= {t=>setEmail(t)} />
+        <TextInput
+          value={email}
+          style={styles.input}
+          onChangeText={(t) => setEmail(t)}
+        />
+        {/* <Text style={styles.top}>Password</Text> */}
         <Text style={styles.top}>Password</Text>
-     
-        <TextInput value={password} style={styles.input} onChangeText= {t=>setPassword(t)}/>
+
+        <TextInput
+          value={password}
+          style={styles.input}
+          onChangeText={(t) => setPassword(t)}
+        />
         <Text style={styles.top}>Pick University</Text>
         <View style={styles.dropdown}>
           <Picker
             selectedValue={university}
-            style={{ height: 44, width: "75%",  }}
+            style={{ height: 44, width: "75%" }}
             onValueChange={(itemValue, itemIndex) => setUniversity(itemValue)}
           >
             <Picker.Item label='University 1' value='java' />
@@ -155,28 +172,34 @@ export default function Auth() {
           </Picker>
           {/* <Ionicons name='ios-arrow-down' size={24} color='black' /> */}
         </View>
-        <Text style={{color:'red',marginTop:15}}>{error}</Text>
+        <Text style={{ color: "red", marginTop: 15 }}>{error}</Text>
         <View style={styles.buttons}>
           <TouchableOpacity
-          onPress={signUp}
+            onPress={signUp}
             style={{
               ...styles.btn,
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
-              marginBottom:10
+              marginBottom: 10,
             }}
           >
             <Text style={styles.top}>Confirm</Text>
-            <Ionicons name='ios-arrow-forward' size={21} color='black' style={{position:'relative',top:1}}/>
+            <Ionicons
+              name='ios-arrow-forward'
+              size={21}
+              color='black'
+              style={{ position: "relative", top: 1 }}
+            />
           </TouchableOpacity>
-         
         </View>
         {/* <Button title='back' onPress={() => setSignUpMode(false)}/> */}
-        <TouchableOpacity style={styles.btn} onPress={() => setSignUpMode(false)}>
-            <Text style={styles.top}>Login</Text>
-          </TouchableOpacity>
-        
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => setSignUpMode(false)}
+        >
+          <Text style={styles.top}>Login</Text>
+        </TouchableOpacity>
       </View>
     );
   }
@@ -189,10 +212,19 @@ export default function Auth() {
           Study Trade
         </Text>
         <Text style={styles.top}>Email</Text>
-        <TextInput value={email} style={styles.input} onChangeText= {t=>setEmail(t)} />
+        <TextInput
+          value={email}
+          style={styles.input}
+          onChangeText={(t) => setEmail(t)}
+        />
         <Text style={styles.top}>Password</Text>
-        <TextInput value={password} style={styles.input} onChangeText= {t=>setPassword(t)}/>
-        <Text style={{color:'red',marginTop:15}}>{error}</Text>
+        <TextInput
+          secureTextEntry={true}
+          value={password}
+          style={styles.input}
+          onChangeText={(t) => setPassword(t)}
+        />
+        <Text style={{ color: "red", marginTop: 15 }}>{error}</Text>
         <View style={styles.buttons}>
           <TouchableOpacity style={styles.btn} onPress={signIn}>
             <Text style={styles.top}>Login</Text>
@@ -200,15 +232,14 @@ export default function Auth() {
           <TouchableOpacity
             style={styles.btn}
             onPress={() => {
-              setPassword('')
-              setEmail('')
-              setSignUpMode(true)
+              setPassword("");
+              setEmail("");
+              setSignUpMode(true);
             }}
           >
             <Text style={styles.top}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-      
       </View>
     );
 }
@@ -242,9 +273,9 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     flexDirection: "row",
     backgroundColor: Colors.grey,
-    justifyContent:'space-around',
-    alignItems:'center',
-    width:'75%'
+    justifyContent: "space-around",
+    alignItems: "center",
+    width: "75%",
   },
   buttons: {
     flexDirection: "row",

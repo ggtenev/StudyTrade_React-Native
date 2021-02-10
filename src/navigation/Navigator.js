@@ -56,6 +56,27 @@ const BuyStack = () => {
     </BuyNav.Navigator>
   );
 };
+const SellStack = () => {
+  return (
+    <BuyNav.Navigator screenOptions={defaultNavOptions}>
+      <BuyNav.Screen
+        name='Sell'
+        component={Sell}
+        options={{
+          headerStyle: {
+            height: 70,
+            backgroundColor: Colors.blue,
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontSize: 28,
+          },
+        }}
+      />
+      <BuyNav.Screen name='Book' component={Book} />
+    </BuyNav.Navigator>
+  );
+};
 
 export default Navigator = () => {
   return (
@@ -88,7 +109,7 @@ export default Navigator = () => {
         />
         <Tab.Screen
           name='Sell'
-          component={Sell}
+          component={SellStack}
           options={{
             tabBarIcon: ({ color, size }) => (
               <FontAwesome5
