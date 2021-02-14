@@ -37,11 +37,12 @@ const defaultNavOptions = {
 
 const BuyStack = () => {
   return (
-    <BuyNav.Navigator screenOptions={defaultNavOptions}>
+    <BuyNav.Navigator screenOptions={{...defaultNavOptions}}>
       <BuyNav.Screen
         name='Buy'
         component={Buy}
         options={{
+          headerShown:true,
           headerStyle: {
             height: 70,
             backgroundColor: Colors.blue,
@@ -52,7 +53,11 @@ const BuyStack = () => {
           },
         }}
       />
-      <BuyNav.Screen name='Book' component={Book} />
+      <BuyNav.Screen
+      options={{
+        headerShown:false
+      }}
+      name='Book' component={Book} />
     </BuyNav.Navigator>
   );
 };
@@ -65,7 +70,7 @@ const SellStack = () => {
         options={{
           headerStyle: {
             height: 70,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.red,
           },
           headerTintColor: "white",
           headerTitleStyle: {

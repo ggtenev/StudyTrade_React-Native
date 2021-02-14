@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   TextInput,
+  ScrollView,
   Image,
   Button,
   TouchableOpacity,
@@ -98,6 +99,7 @@ export default function Auth() {
                 name: `${firstName} ${lastName}`,
                 email: email,
                 university,
+                userBooks:[],
               })
               .then(() => {
                 setIsLoading(false);
@@ -150,13 +152,13 @@ export default function Auth() {
         <TextInput
           value={email}
           style={styles.input}
-          onChangeText={(t) => setEmail(t)}
+          onChangeText={(t) => setEmail(t)} 
         />
-        {/* <Text style={styles.top}>Password</Text> */}
-        <Text style={styles.top}>Password</Text>
-
+        <Text style={{...styles.top,color:'black'}}>Password</Text>
+        
         <TextInput
           value={password}
+          secureTextEntry={true}
           style={styles.input}
           onChangeText={(t) => setPassword(t)}
         />
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 25,
     height: 45,
-    marginBottom: 15,
+    marginBottom: 10,
     padding: 10,
   },
   dropdown: {
@@ -281,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     width: "75%",
-    marginTop: 50,
+    marginTop: 32,
   },
   btn: {
     borderRadius: 25,

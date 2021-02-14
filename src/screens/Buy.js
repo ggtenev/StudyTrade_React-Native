@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, StatusBar, Image, ScrollView, TextInput, FlatList } from 'react-native';
 import Colors from  '../constants/Colors'
 import { FontAwesome } from '@expo/vector-icons'; 
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import {useDispatch,useSelector} from 'react-redux'
+import * as actions from '../store/actions'
+import firebase from 'firebase'
+import { NavigationContainer } from '@react-navigation/native';
 
 const BOOKS = [
   {
@@ -32,6 +36,8 @@ const BOOKS = [
  
 ];
 
+
+
 const BookCover = ({uri, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress} style={{width:110,height:200, marginTop:10,marginHorizontal:10}}>
@@ -41,8 +47,40 @@ const BookCover = ({uri, onPress}) => {
     
 } 
 
-export default function Buy() {
+export default function Buy({navigation}) {
   const [search, setSearch] = useState('')
+  // const [books, setBooks] = useState( )
+  const books =  useSelector(state => state.reducer.storeBooks)
+  console.log(books)
+  const filteredBooks = books.filter(b => {
+    if(b.title.toLowerCase().includes(search.toLowerCase())){
+      return b
+    }
+    if(b.author.toLowerCase().includes(search.toLowerCase())){
+      return b
+    }
+  })
+
+  const dispatch = useDispatch()
+  
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user) {
+        dispatch(actions.fetchUserStatus(user.uid));
+      
+      }
+    });
+  
+  }, [])
+  
+  useEffect(() => { 
+    dispatch(actions.fetchBooks());
+    // const bookZ = useSelector(state => state.reducer.books)
+    // setBooks(bookZ)
+    return 
+
+  }, [])
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* <ScrollView contentContainerStyle={styles.container}> */}
@@ -57,16 +95,20 @@ export default function Buy() {
         </View>
         <FlatList 
         horizontal={true}
-        data={BOOKS}
-        keyExtractor = {(item) => item.id}
+        data={filteredBooks}
+        // keyExtractor = {(item) => item.url}
         renderItem = {({item}) => {
           return (
             <BookCover 
-            uri={item.uri}
+            // book = {item}
+            onPress={() => navigation.navigate('Book',{
+              book:item
+            })}
+            uri={item.url}
             />
           )
         }}
-        />
+        /> 
         {/* </ScrollView> */}
      </ScrollView>
   );
