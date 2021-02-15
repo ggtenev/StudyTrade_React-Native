@@ -36,10 +36,18 @@ export default function Sell({navigation}) {
   const [condition, setCondition] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
+  const [isVerified, setIsverified] = useState(false)
 
   let user = firebase.auth().currentUser;
   let currentBooks = useSelector(state => state.reducer.userBooks)
   const dispatch = useDispatch()
+
+useEffect(() => {
+  if(user.emailVerified) {
+    setIsverified(true)
+  }
+  return 
+}, [])
 
   const fireUploadID = async (uri) => {
     const response = await fetch(uri);
@@ -154,6 +162,17 @@ export default function Sell({navigation}) {
       //   .catch((err) => console.log(err));
     }
   };
+
+  if(!isVerified) {
+    return (
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:22,color:'red', marginBottom:20,textAlign:'center',width:'80%'}}>Please verify you email and sign in again </Text>
+        <TouchableOpacity style={styles.btn} onPress={() => firebase.auth().signOut()}>
+            <Text style={styles.top}>Sign Out</Text>
+          </TouchableOpacity>
+      </View>
+    )
+  }
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>

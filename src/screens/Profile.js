@@ -28,6 +28,7 @@ export default function Profile({ navigation }) {
   const university = useSelector((state) => state.reducer.university);
   const [errorMsg, setErrorMsg] = useState(null);
   const [location, setLocation] = useState(null);
+  const user = firebase.auth().currentUser
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
@@ -118,6 +119,11 @@ export default function Profile({ navigation }) {
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
             Personal Details
           </Text>
+          {
+            !user.emailVerified ? (
+              <Text style={{color:'red',fontWeight:'bold'}}>Account is not verified</Text>
+            ) : (<Text style={{color:'green',fontWeight:'bold'}}>Account is  verified</Text>)
+          }
           <Text style={{ fontSize: 18 }}>{name}</Text>
           <Text style={{ fontSize: 18 }}>Email: {email}</Text>
           <Text style={{ fontSize: 18 }}>University: {university}</Text>

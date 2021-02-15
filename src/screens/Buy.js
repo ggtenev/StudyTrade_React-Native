@@ -30,6 +30,7 @@ const BookCover = ({ uri, onPress }) => {
 
 export default function Buy({ navigation }) {
   const [search, setSearch] = useState("");
+  const [isVerified, setIsverified] = useState(false)
   // const [books, setBooks] = useState( )
   const books = useSelector((state) => state.reducer.storeBooks);
   console.log(books);
@@ -42,11 +43,16 @@ export default function Buy({ navigation }) {
     }
   });
 
+  
+
   const dispatch = useDispatch();
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
+        if(user.emailVerified) {
+          setIsverified(true)
+        }
         dispatch(actions.fetchUserStatus(user.uid));
       }
     });
@@ -59,6 +65,16 @@ export default function Buy({ navigation }) {
     return;
   }, []);
 
+  if(!isVerified) {
+    return (
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <Text style={{fontSize:22,color:'red', marginBottom:20,textAlign:'center',width:'80%'}}>Please verify you email and sign in again </Text>
+        <TouchableOpacity style={styles.btn} onPress={() => firebase.auth().signOut()}>
+            <Text style={styles.top}>Sign Out</Text>
+          </TouchableOpacity>
+      </View>
+    )
+  }
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* <ScrollView contentContainerStyle={styles.container}> */}
@@ -151,5 +167,9 @@ const styles = StyleSheet.create({
     width: 130,
     alignItems: "center",
     justifyContent: "center",
+  },
+  top: {
+    fontWeight: "bold",
+    fontSize: 18,
   },
 });

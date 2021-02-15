@@ -31,7 +31,7 @@ export default function Auth() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [university, setUniversity] = useState("University 1");
+  const [university, setUniversity] = useState("University of Kent");
   const [error, setError] = useState("");
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
@@ -75,12 +75,12 @@ export default function Auth() {
       
       return;
     }
-    if(
-      !email.includes('kent.ac.uk')){
-        setError('You have to use a university email address')
-        setIsLoading(false);
-        return
-      }
+    // if(
+    //   !email.includes('kent.ac.uk')){
+    //     setError('You have to use a university email address')
+    //     setIsLoading(false);
+    //     return
+    //   }
     
 
     //     else if (!email) {
@@ -192,8 +192,8 @@ export default function Auth() {
             style={{ height: 44, width: "75%" }}
             onValueChange={(itemValue, itemIndex) => setUniversity(itemValue)}
           >
-            <Picker.Item label='University 1' value='java' />
-            <Picker.Item label='University 2' value='js' />
+            <Picker.Item label='University of Kent' value='Kent' />
+            <Picker.Item label='University of Hull' value='Hull' />
           </Picker>
           {/* <Ionicons name='ios-arrow-down' size={24} color='black' /> */}
         </View>
