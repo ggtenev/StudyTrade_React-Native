@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 export default function Book({ route, navigation }) {
-  const { author, condition, key, title, url } = route.params.book;
+  const { author, condition,price, key, title, url } = route.params.book;
   console.log(route.params);
   console.log(url);
   return (
@@ -29,12 +29,13 @@ export default function Book({ route, navigation }) {
           <View style={styles.lower}></View>
           <View style={styles.book}>
             <Image style={styles.image} source={{ uri: url }} />
-            <TouchableOpacity style={styles.btn} onPress={() => {}}>
+            <TouchableOpacity style={styles.btn} onPress={() => {navigation.navigate('Checkout')}}>
               <Text style={{ color: "white", fontWeight: "bold" }}>
-                Pay with PayPal
+                Checkout
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            <Text style={{fontSize:22}}>£{price}</Text>
+            {/* <TouchableOpacity
               style={{
                 ...styles.btn,
                 backgroundColor: Colors.grey,
@@ -45,7 +46,7 @@ export default function Book({ route, navigation }) {
               <Text style={{ color: "black", fontWeight: "bold" }}>
                 Other Methods
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
         <View style={{margin:10}}>
@@ -180,6 +181,6 @@ const styles = StyleSheet.create({
     width: 160,
     alignItems: "center",
     justifyContent: "center",
-    marginVertical: 15,
+    marginVertical: 10,
   },
 });

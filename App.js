@@ -8,6 +8,9 @@ import { Provider } from "react-redux";
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
 
+import * as Font from "expo-font";
+import AppLoading from 'expo-app-loading';
+
 import { decode, encode } from "base-64";
 if (!global.btoa) {
   global.btoa = encode;
@@ -24,10 +27,16 @@ const rootReducer = combineReducers({
 
 const store = createStore(rootReducer, applyMiddleware(reduxThunk));
 
+const loadFonts = () =>Font.loadAsync({
+  'Renner': require("./assets/Gotham-Ultra.otf"),
+ 
+});
+
 export default function App() {
   const [loaded, setLoaded] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [isSigned, setIsSigned] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   React.useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -40,6 +49,18 @@ export default function App() {
       }
     });
   }, []);
+
+  if (!fontsLoaded) {
+    return (
+      <AppLoading
+      onError={() => {}}
+        startAsync={loadFonts}
+        onFinish={() => setFontsLoaded(true)}
+      />
+    );
+  }
+
+ else {
 
   if (!loaded) {
     return (
@@ -58,6 +79,7 @@ export default function App() {
       <Nav />
     </Provider>
   );
+ }
 }
 
 const styles = StyleSheet.create({

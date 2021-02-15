@@ -12,6 +12,9 @@ import BuyResults from "../screens/BuyResults";
 import Sell from "../screens/Sell";
 import Profile from "../screens/Profile";
 import Book from "../screens/Book";
+import Chat from '../screens/Chat'
+import Checkout from '../screens/Checkout'
+import Confirmation from '../screens/Confirmation'
 
 const BuyNav = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -44,7 +47,7 @@ const BuyStack = () => {
         options={{
           headerShown:true,
           headerStyle: {
-            height: 70,
+            height: 100,
             backgroundColor: Colors.blue,
           },
           headerTintColor: "white",
@@ -52,6 +55,81 @@ const BuyStack = () => {
             fontSize: 28,
           },
         }}
+      />
+      <BuyNav.Screen
+      name='Results'
+      component={BuyResults}
+      options={{
+        headerShown:true,
+        headerStyle: {
+          height: 100,
+          backgroundColor: 'white',
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 28,
+        },
+      }}
+      />
+      <BuyNav.Screen
+      name='Chat'
+      component={Chat}
+      options={{
+        headerShown:true,
+        headerStyle: {
+          height: 90,
+          backgroundColor: "white",
+          shadowRadius: 0,
+          shadowOffset: {
+            height: 0,
+          },
+          elevation: 0,
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 28,
+        },
+      }}
+      />
+      <BuyNav.Screen
+      name='Checkout'
+      component={Checkout}
+      options={{
+        headerShown:false,
+        headerStyle: {
+          height: 90,
+          backgroundColor: "white",
+          shadowRadius: 0,
+          shadowOffset: {
+            height: 0,
+          },
+          elevation: 0,
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 28,
+        },
+      }}
+      />
+      <BuyNav.Screen
+      name='Confirmation'
+      component={Confirmation}
+      options={{
+        headerShown:false,
+        headerStyle: {
+          height: 90,
+          backgroundColor: "white",
+          shadowRadius: 0,
+          shadowOffset: {
+            height: 0,
+          },
+          elevation: 0,
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 28,
+        },
+      }}
       />
       <BuyNav.Screen
       options={{
@@ -69,8 +147,29 @@ const SellStack = () => {
         component={Sell}
         options={{
           headerStyle: {
-            height: 70,
+            height: 100,
             backgroundColor: Colors.red,
+          },
+          headerTintColor: "white",
+          headerTitleStyle: {
+            fontSize: 28,
+          },
+        }}
+      />
+      <BuyNav.Screen name='Book' component={Book} />
+    </BuyNav.Navigator>
+  );
+};
+const ProfileStack = () => {
+  return (
+    <BuyNav.Navigator screenOptions={defaultNavOptions}>
+      <BuyNav.Screen
+        name='Profile'
+        component={Profile}
+        options={{
+          headerStyle: {
+            height: 100,
+            backgroundColor: 'black',
           },
           headerTintColor: "white",
           headerTitleStyle: {
@@ -127,7 +226,7 @@ export default Navigator = () => {
         />
         <Tab.Screen
           name='Profile'
-          component={Profile}
+          component={ProfileStack}
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name='account-box' size={24} color={color} />

@@ -64,7 +64,8 @@ export default function Sell({navigation}) {
                     title,
                     condition,
                     author,
-                    url
+                    url,
+                    price
                   },
                   ...currentBooks,
                 ],
@@ -80,6 +81,7 @@ export default function Sell({navigation}) {
               condition,
               url:String(url),
               author,
+              price,
               key:Math.random().toString(12)
             });
         })
@@ -156,7 +158,7 @@ export default function Sell({navigation}) {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
       <View style={styles.container}>
-        <StatusBar backgroundColor={Colors.red} />
+        {/* <StatusBar backgroundColor={Colors.red} /> */}
         <Modal
           animationType='fade'
           transparent={true}

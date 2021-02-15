@@ -12,11 +12,16 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import firebase from "../constants/config";
-
+import * as Font from 'expo-font';
 import { Ionicons } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import AppLoading from 'expo-app-loading';
 
-
+// const loadFonts = () =>Font.loadAsync({
+//   'Renner': require("./assets/fonts/Renner.ttf"),
+//   'Renner-Bold': require('./assets/fonts/Renner_Bold.ttf'),
+//   'rowdies' : require('./assets/fonts/Rowdies-Bold.ttf')
+// });
 
 export default function Auth() {
   const [loginMode, setLoginMode] = useState(false);
@@ -28,9 +33,14 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const [university, setUniversity] = useState("University 1");
   const [error, setError] = useState("");
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  // let [fontsLoaded] = useFonts({
+  //   'gotham': require('../../assets/Gotham-Ultra.otf'),
+  // });
 
   //SIGN IN METHOD
-  const signIn = async () => {
+  const signIn = async () => { 
     // dispatch(() => authActions.signIn())
     setIsLoading(true);
     if (!email || !password) {
@@ -62,9 +72,16 @@ export default function Auth() {
     setIsLoading(true);
     if (!firstName || !lastName) {
       setError("Fill in all fields");
-      setIsLoading(false);
+      
       return;
     }
+    if(
+      !email.includes('kent.ac.uk')){
+        setError('You have to use a university email address')
+        setIsLoading(false);
+        return
+      }
+    
 
     //     else if (!email) {
     //       setError("Password doesn't match");
@@ -121,6 +138,12 @@ export default function Auth() {
         setIsLoading(false);
       });
   };
+
+// if(!fontsLoaded){
+//   return <AppLoading />
+// } else {
+
+
 
   //LOADING SPINNER WHILE SENDING REQUEST TO THE SERVER
   if (isLoading) {
@@ -210,10 +233,11 @@ export default function Auth() {
     return (
       <View style={styles.container}>
         <Image style={styles.img} source={require("../../assets/book.png")} />
-        <Text style={{ fontSize: 28, fontWeight: "bold", paddingBottom: 60 }}>
+        <Text style={{ fontSize: 28, paddingBottom: 60,fontFamily:'Renner' }}>
           Study Trade
         </Text>
         <Text style={styles.top}>Email</Text>
+
         <TextInput
           value={email}
           style={styles.input}
@@ -244,6 +268,7 @@ export default function Auth() {
         </View>
       </View>
     );
+          
 }
 
 const styles = StyleSheet.create({
