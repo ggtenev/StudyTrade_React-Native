@@ -3,9 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
+  Platform,
   TouchableOpacity,
   Button,
   TextInput,
+  KeyboardAvoidingView,
   Modal,
   StatusBar,
   Image,
@@ -36,7 +38,8 @@ export default function Sell({navigation}) {
   const [condition, setCondition] = useState("");
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
-  const [isVerified, setIsverified] = useState(false)
+  const [isbn, setIsbn] = useState("");
+  const [isVerified, setIsverified] = useState(true)
 
   let user = firebase.auth().currentUser;
   let currentBooks = useSelector(state => state.reducer.userBooks)
@@ -73,7 +76,8 @@ useEffect(() => {
                     condition,
                     author,
                     url,
-                    price
+                    price,
+                    isbn
                   },
                   ...currentBooks,
                 ],
@@ -90,6 +94,7 @@ useEffect(() => {
               url:String(url),
               author,
               price,
+              isbn,
               key:Math.random().toString(12)
             });
         })
@@ -175,8 +180,11 @@ useEffect(() => {
   }
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={styles.container}>
+    <KeyboardAvoidingView behavior='height' keyboardVerticalOffset={120} style={styles.container}
+    // behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+    <ScrollView contentContainerStyle={{alignItems:'center',width:'100%'}} >
+     
         {/* <StatusBar backgroundColor={Colors.red} /> */}
         <Modal
           animationType='fade'
@@ -309,6 +317,27 @@ useEffect(() => {
             value={price}
           />
         </View>
+        <View style={styles.input}>
+          {/*Email input field */}
+          <FontAwesome
+            name='barcode'
+            size={21}
+            color='red'
+            style={{ marginLeft: 5, marginRight: 4 }}
+          />
+          {/* <MaterialIcons name='person' size={21} color='red' /> */}
+          <TextInput
+            style={styles.inputFiled}
+            placeholder='ISBN *'
+            keyboardType='number-pad'
+            required
+            // editable={false}
+            autoCapitalize='none'
+            errorText='Please enter a valid email'
+            onChangeText={(text) => setIsbn(text)}
+            value={isbn}
+          />
+        </View>
         <TouchableOpacity
             onPress={() => fireUploadID(image)}
             style={{
@@ -328,8 +357,9 @@ useEffect(() => {
             />
           </TouchableOpacity>
         {/* <Button title='Uplaod' onPress={}/> */}
-      </View>
+      
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -339,6 +369,7 @@ const styles = StyleSheet.create({
     // justifyContent:'center',
     alignItems: "center",
     backgroundColor: "white",
+    width:'100%'
   },
   camera: {
     flex: 1,

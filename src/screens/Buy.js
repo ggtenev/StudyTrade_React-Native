@@ -30,7 +30,7 @@ const BookCover = ({ uri, onPress }) => {
 
 export default function Buy({ navigation }) {
   const [search, setSearch] = useState("");
-  const [isVerified, setIsverified] = useState(false)
+  const [isVerified, setIsverified] = useState(true)
   // const [books, setBooks] = useState( )
   const books = useSelector((state) => state.reducer.storeBooks);
   console.log(books);
@@ -39,6 +39,9 @@ export default function Buy({ navigation }) {
       return b;
     }
     if (b.author.toLowerCase().includes(search.toLowerCase())) {
+      return b;
+    }
+    if (String(b.isbn).toLowerCase().includes(search.toLowerCase())) {
       return b;
     }
   });

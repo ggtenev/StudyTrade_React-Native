@@ -7,8 +7,14 @@ import {
   ScrollView,
   Image,
   Button,
+  Modal,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
   TouchableOpacity,
   ActivityIndicator,
+  KeyboardAvoidingViewComponent,
 } from "react-native";
 import Colors from "../constants/Colors";
 import firebase from "../constants/config";
@@ -34,6 +40,7 @@ export default function Auth() {
   const [university, setUniversity] = useState("University of Kent");
   const [error, setError] = useState("");
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   // let [fontsLoaded] = useFonts({
   //   'gotham': require('../../assets/Gotham-Ultra.otf'),
@@ -156,9 +163,46 @@ export default function Auth() {
 
   if (signUpMode) {
     return (
+      
+     
       <View style={styles.container}>
-        {/* <Image style={styles.img} source={require('../../assets/book.png')}/>
-      <Text style={{fontSize:28,fontWeight:'bold',paddingBottom:60}}>Study Trade</Text> */}
+         <Modal
+          animationType='fade'
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            // Alert.alert("Modal has been closed.");
+          }}
+        >
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={{ ...styles.modalText, color: "black" }}>
+                Select your university
+              </Text>
+              <TouchableOpacity
+                style={styles.modalBoxes}
+                onPress={() => {
+                  setUniversity('University of Hull')
+                  setModalVisible(false)
+                }}
+              >
+                <Text style={styles.modalText}>University of Hull</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalBoxes}
+                onPress={() => {
+                  setUniversity('University of Kent')
+                  setModalVisible(false)
+                }}
+              >
+                <Text style={styles.modalText}>University of Kent</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => setModalVisible(false)}>
+                <Text style={{ ...styles.modalText, color: "red" }}>Close</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <Text style={styles.top}>First Name</Text>
         <TextInput
           value={firstName}
@@ -184,24 +228,17 @@ export default function Auth() {
           secureTextEntry={true}
           style={styles.input}
           onChangeText={(t) => setPassword(t)}
-        />
+        /> 
         <Text style={styles.top}>Pick University</Text>
-        <View style={styles.dropdown}>
-          <Picker
-            selectedValue={university}
-            style={{ height: 44, width: "75%" }}
-            onValueChange={(itemValue, itemIndex) => setUniversity(itemValue)}
-          >
-            <Picker.Item label='University of Kent' value='Kent' />
-            <Picker.Item label='University of Hull' value='Hull' />
-          </Picker>
-          {/* <Ionicons name='ios-arrow-down' size={24} color='black' /> */}
-        </View>
+        <TouchableOpacity onPress={() => setModalVisible(true)} style={styles.dropdown}>
+          <Text style={{fontSize:16}}> { university ? university : 'Select Univerity'}</Text>
+          <Ionicons name='ios-arrow-down' size={24} color='black' />
+        </TouchableOpacity>
         <Text style={{ color: "red", marginTop: 15 }}>{error}</Text>
         <View style={styles.buttons}>
           <TouchableOpacity
             onPress={signUp}
-            style={{
+            style={{ 
               ...styles.btn,
               flexDirection: "row",
               alignItems: "center",
@@ -225,19 +262,23 @@ export default function Auth() {
         >
           <Text style={styles.top}>Login</Text>
         </TouchableOpacity>
-      </View>
+        </View>
+      //   </TouchableWithoutFeedback>
+      // </KeyboardAvoidingView>
     );
   }
 
   if (!signUpMode)
     return (
-      <View style={styles.container}>
+      <View  style={styles.container}>
         <Image style={styles.img} source={require("../../assets/book.png")} />
         <Text style={{ fontSize: 28, paddingBottom: 60,fontFamily:'Renner' }}>
           Study Trade
         </Text>
         <Text style={styles.top}>Email</Text>
-
+        <KeyboardAvoidingView
+        keyboardVerticalOffset = { 20}
+         enabled={true} style={{width:'100%',alignItems:'center'}} behavior={Platform.OS === "ios" ? "padding" : "height"}>
         <TextInput
           value={email}
           style={styles.input}
@@ -250,6 +291,7 @@ export default function Auth() {
           style={styles.input}
           onChangeText={(t) => setPassword(t)}
         />
+        </KeyboardAvoidingView>
         <Text style={{ color: "red", marginTop: 15 }}>{error}</Text>
         <View style={styles.buttons}>
           <TouchableOpacity style={styles.btn} onPress={signIn}>
@@ -298,6 +340,7 @@ const styles = StyleSheet.create({
   dropdown: {
     borderRadius: 25,
     overflow: "hidden",
+    height:45,
     flexDirection: "row",
     backgroundColor: Colors.grey,
     justifyContent: "space-around",
@@ -325,5 +368,36 @@ const styles = StyleSheet.create({
   activityIndicator: {
     flex: 1,
     justifyContent: "center",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    // alignItems: "center",
+    marginTop: 22,
+  },
+  modalView: {
+    margin: 20,
+    backgroundColor: "white",
+    borderRadius: 20,
+    padding: 15,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  modalText: {
+    marginVertical: 15,
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "blue",
+  },
+  modalBoxes: {
+    borderBottomWidth: 0.4,
+    borderBottomColor: "blue",
   },
 });
