@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 
-export default function Card({ url, title, author, condition, onPress, navigation }) {
+export default function Card({userID, url, title, author, condition, onPress, navigation }) {
   return (
     <View style={styles.container} >
       <Image source={{ uri: url }} style={styles.img} />
@@ -11,7 +11,7 @@ export default function Card({ url, title, author, condition, onPress, navigatio
       <TouchableOpacity style={styles.btn} onPress={onPress}>
         <Text style={{color:'white',fontSize:13}}>Buy Now</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('Chat')}>
+      <TouchableOpacity style={styles.btn} onPress={()=> navigation.navigate('Chat',{ userID })}>
         <Text style={{color:'white',fontSize:13}}>Message</Text>
       </TouchableOpacity>
       </View>

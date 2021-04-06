@@ -82,12 +82,12 @@ export default function Auth() {
       
       return;
     }
-    // if(
-    //   !email.includes('kent.ac.uk')){
-    //     setError('You have to use a university email address')
-    //     setIsLoading(false);
-    //     return
-    //   }
+    if(
+      !email.includes('kent.ac.uk')){
+        setError('You have to use a university email address')
+        setIsLoading(false);
+        return
+      }
     
 
     //     else if (!email) {

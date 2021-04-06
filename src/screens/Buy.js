@@ -9,6 +9,7 @@ import {
   TextInput,
   FlatList,
 } from "react-native";
+import { LineChart } from 'react-native-line-chart'
 import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -33,7 +34,7 @@ export default function Buy({ navigation }) {
   const [isVerified, setIsverified] = useState(true)
   // const [books, setBooks] = useState( )
   const books = useSelector((state) => state.reducer.storeBooks);
-  console.log(books);
+
   const filteredBooks = books.filter((b) => {
     if (b.title.toLowerCase().includes(search.toLowerCase())) {
       return b;
@@ -82,6 +83,11 @@ export default function Buy({ navigation }) {
     <ScrollView contentContainerStyle={styles.container}>
       {/* <ScrollView contentContainerStyle={styles.container}> */}
       {/* <StatusBar backgroundColor={Colors.blue} /> */}
+
+      <View>
+ 
+</View>
+     
       <Image style={styles.img} source={require("../../assets/book.png")} />
       <Text style={{ fontSize: 22,  paddingBottom: 10, fontFamily:'Renner' }}>
         Study Trade

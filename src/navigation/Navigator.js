@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialIcons, Ionicons, FontAwesome5 } from "@expo/vector-icons";
+import { MaterialIcons, Ionicons, FontAwesome5, Entypo } from "@expo/vector-icons";
 import React from "react";
 
 import Colors from "../constants/Colors";
@@ -15,6 +15,7 @@ import Book from "../screens/Book";
 import Chat from '../screens/Chat'
 import Checkout from '../screens/Checkout'
 import Confirmation from '../screens/Confirmation'
+import Conversations from '../screens/Conversations'
 
 const BuyNav = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,6 +38,49 @@ const defaultNavOptions = {
 
   headerTintColor: Colors.dark,
 };
+
+const ChatStack = () => {
+  return (
+    <BuyNav.Navigator screenOptions={{...defaultNavOptions}}>
+    <BuyNav.Screen
+    name='Conversations'
+    component={Conversations}
+    options={{
+      headerShown:true,
+      headerStyle: {
+        height: 66,
+        backgroundColor: 'white',
+      },
+      headerTintColor: "black",
+      headerTitleStyle: {
+        fontSize: 28,
+      },
+    }}
+    />
+    <BuyNav.Screen
+      name='Chat'
+      component={Chat}
+      options={{
+        headerShown:true,
+        headerStyle: {
+          height: 90,
+          backgroundColor: "white",
+          shadowRadius: 0,
+          shadowOffset: {
+            height: 0,
+          },
+          elevation: 0,
+        },
+        headerTintColor: "black",
+        headerTitleStyle: {
+          fontSize: 28,
+        },
+      }}
+      />
+  </BuyNav.Navigator>
+  )
+  
+}
 
 const BuyStack = () => {
   return (
@@ -230,6 +274,15 @@ export default Navigator = () => {
           options={{
             tabBarIcon: ({ color, size }) => (
               <MaterialIcons name='account-box' size={24} color={color} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name='Messages'
+          component={ChatStack}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Entypo name="chat" size={24} color={color} />
             ),
           }}
         />

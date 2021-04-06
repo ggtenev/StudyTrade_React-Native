@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Text, View, ActivityIndicator,LogBox } from "react-native";
 import Nav from "./src/navigation/Navigator";
 import firebase from "./src/constants/config";
 import Auth from "./src/screens/Auth";
@@ -18,6 +18,7 @@ if (!global.btoa) {
 if (!global.atob) {
   global.atob = decode;
 }
+ LogBox.ignoreAllLogs()
 
 import reducer from "./src/store/reducer";
 

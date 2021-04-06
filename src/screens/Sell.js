@@ -11,8 +11,10 @@ import {
   Modal,
   StatusBar,
   Image,
+  Dimensions,
   ScrollView,
 } from "react-native";
+
 import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import {
@@ -26,7 +28,7 @@ import firebase from "../constants/config";
 import Colors from "../constants/Colors";
 import {useSelector, useDispatch} from 'react-redux'
 import * as actions from '../store/actions'
-
+import { LineChart } from 'react-native-line-chart'
 
 export default function Sell({navigation}) {
   const [camera, setCamera] = useState(null);
@@ -42,6 +44,7 @@ export default function Sell({navigation}) {
   const [isVerified, setIsverified] = useState(true)
 
   let user = firebase.auth().currentUser;
+  let userID = firebase.auth().currentUser.uid
   let currentBooks = useSelector(state => state.reducer.userBooks)
   const dispatch = useDispatch()
 
@@ -95,7 +98,8 @@ useEffect(() => {
               author,
               price,
               isbn,
-              key:Math.random().toString(12)
+              key:Math.random().toString(12),
+              userID
             });
         })
         .then((url) => {
@@ -217,8 +221,47 @@ useEffect(() => {
             </View>
           </View>
         </Modal>
+
+        <Text style={{fontWeight:'bold', position:'relative',left:-150,top:10,}}>Sign In Activity</Text>
+    
+        
+        <LineChart
+    data={{
+      labels: ['0-3am','3-6am', '6-9am', '9-12am', '12-3pm','3-6pm', '6-9pm'],
+      datasets: [{
+        data: [
+         113,55,78,11,96,55,90
+          
+        ]
+      }]
+    }}
+    width={Dimensions.get('window').width} // from react-native
+    height={220}
+    chartConfig={{
+      backgroundColor: 'green',
+      backgroundGradientFrom: 'white',
+      backgroundGradientTo: 'white',
+      decimalPlaces: 2, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(40, 50, 10, ${opacity})`,
+      style: {
+        borderRadius: 16
+      }
+    }}
+    
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+
+
         <View style={{ alignItems: "center", paddingBottom: 10,width:'95%' }}>
           {/* <TouchableOpacity style={styles.uploadContainer} onPress={pickImage}> */}
+
+
+ 
+
+
           <TouchableOpacity
             style={styles.uploadContainer}
             onPress={() => {
@@ -357,6 +400,7 @@ useEffect(() => {
             />
           </TouchableOpacity>
         {/* <Button title='Uplaod' onPress={}/> */}
+      
       
     </ScrollView>
     </KeyboardAvoidingView>

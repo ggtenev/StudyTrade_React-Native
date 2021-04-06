@@ -26,10 +26,12 @@ export default function BuyResult({ navigation, route }) {
       <Card
       navigation={navigation}
         key={Math.random()}
+        userID = {b.userID}
         title={b.title}
         author={b.author}
         condition={b.condition}
         url={b.url}
+
         onPress={() => navigation.navigate('Book',{
           book:b
         })}
