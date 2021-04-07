@@ -48,7 +48,7 @@ const ChatStack = () => {
     options={{
       headerShown:true,
       headerStyle: {
-        height: 66,
+        height: 80,
         backgroundColor: 'white',
       },
       headerTintColor: "black",

@@ -222,7 +222,7 @@ useEffect(() => {
           </View>
         </Modal>
 
-        <Text style={{fontWeight:'bold', position:'relative',left:-150,top:10,}}>Sign In Activity</Text>
+        <Text style={{fontWeight:'bold', marginTop:10}}>Sign In Activity</Text>
     
         
         <LineChart

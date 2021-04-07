@@ -66,7 +66,8 @@ const styles = StyleSheet.create({
     borderWidth:0.4,
     alignItems:'center',
     justifyContent:'flex-start',
-    flexDirection:'row'
+    flexDirection:'row',
+    marginTop:5
 
   }
 })
