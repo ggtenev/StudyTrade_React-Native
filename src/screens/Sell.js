@@ -41,7 +41,8 @@ export default function Sell({navigation}) {
   const [author, setAuthor] = useState("");
   const [price, setPrice] = useState("");
   const [isbn, setIsbn] = useState("");
-  const [isVerified, setIsverified] = useState(true)
+  //CHECK IF VERIFIED
+  const [isVerified, setIsverified] = useState(false)
 
   let user = firebase.auth().currentUser;
   let userID = firebase.auth().currentUser.uid

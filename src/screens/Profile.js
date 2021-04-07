@@ -150,7 +150,7 @@ export default function Profile({ navigation }) {
             />
           </MapView>
         </View>
-        <View style={{ margin: 10 }}>
+        {/* <View style={{ margin: 10 }}>
           <Text style={{ fontWeight: "bold", fontSize: 22 }}>
             Transaction History
           </Text>
@@ -167,7 +167,7 @@ export default function Profile({ navigation }) {
           }}
           />
          
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );

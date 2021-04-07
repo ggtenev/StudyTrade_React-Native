@@ -11,7 +11,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { NavigationContainer } from "@react-navigation/native";
 import Colors from "../constants/Colors";
 export default function Book({ route, navigation }) {
-  const { author, condition,price, key, title, url } = route.params.book;
+  const { author, condition,price, key, title, url, isbn } = route.params.book;
   console.log(route.params);
   console.log(url);
   return (
@@ -54,12 +54,17 @@ export default function Book({ route, navigation }) {
         <Text style={{fontSize:16}}>Title: {title}</Text>
           <Text style={{fontSize:16}}>Author: {author}</Text>
           <Text style={{fontSize:16}}>Condition: {condition}</Text>
+          <Text style={{fontSize:16}}>ISBN: {isbn}</Text>
         </View>
+
+
+
+
         <View style={{margin:10}}>
         <Text style={{fontWeight:'bold',fontSize:18}}>Seller Reviews</Text>
         <View style={styles.review}>
           <View style={{flexDirection:'row',alignItems:'center'}}>
-          <Image style={{height:70,width:70,borderRadius:35}} source={{uri:'https://www.femalefirst.co.uk/image-library/land/500/s/stephanie-hodge-awi-1011.jpg'}} />
+          <Image style={{height:70,width:70,borderRadius:35}} source={{uri:'https://static.showit.co/1200/eOjZEXZuS9uRmeBymGd_QQ/55058/karissavantassel-headshot2.jpg'}} />
           <View style={{marginLeft:8}}>
             <Text style={{fontSize:16}}>Emily Conner</Text>
             <Text style={{fontWeight:'bold'}}>Designer</Text>
@@ -73,14 +78,14 @@ export default function Book({ route, navigation }) {
           <Ionicons name="ios-star" size={24} color="white" />
           <Ionicons name="ios-star" size={24} color="white" />
           </View>
-          <Text>Excellent book to get you thinking. About half way through. I've had to give up on 1 so far, for which I didn't even understand the solution. It will improve me or dispatch me. </Text>
+          <Text>The seller was lovely, but took a while to respond. We sorted out the payment and I absolutely love the book. It is exactly as described and I can’t wait to begin reading it. </Text>
         </View>
         <View style={styles.review}>
           <View style={{flexDirection:'row',alignItems:'center'}}>
           <Image style={{height:70,width:70,borderRadius:35}} source={{uri:'https://www.torchlightinvestors.com/wp-content/uploads/2018/02/ScottBarsky.jpg'}} />
           <View style={{marginLeft:8}}>
             <Text style={{fontSize:16}}>Mark Robinson</Text>
-            <Text style={{fontWeight:'bold'}}>Architect</Text>
+            <Text style={{fontWeight:'bold'}}>Computer Science (BSc), Student</Text>
           </View>
           </View>
          
@@ -93,14 +98,14 @@ export default function Book({ route, navigation }) {
           <Ionicons name="ios-star" size={24} color="white" />
           <Ionicons name="ios-star" size={24} color="white" />
           </View>
-          <Text>Excellent book to get you thinking. About half way through. I've had to give up on 1 so far, for which I didn't even understand the solution. It will improve me or dispatch me. </Text>
+          <Text>Excellent seller and had a great experience with the service. Communication was efficient and effective which aided the transaction process and will be looking forward to reading the book. </Text>
         </View>
         <View style={styles.review}>
           <View style={{flexDirection:'row',alignItems:'center'}}>
-          <Image style={{height:70,width:70,borderRadius:35}} source={{uri:'https://chicagorealtor-12462.kxcdn.com/wp-content/uploads/2019/02/CF_CCIM-Headshots-3.png'}} />
+          <Image style={{height:70,width:70,borderRadius:35}} source={{uri:'https://cdn.shortpixel.ai/spai/w_788+q_lossy+ret_img+to_webp/https://www.colemanphotographix.com/wp-content/uploads/Student-Headshots-027.jpg'}} />
           <View style={{marginLeft:8}}>
-            <Text style={{fontSize:16}}>Tom Barsky</Text>
-            <Text style={{fontWeight:'bold'}}>Data Analyst</Text>
+            <Text style={{fontSize:16}}>Tom Kewell</Text>
+            <Text style={{fontWeight:'bold'}}>Computer Science (BSc), Student</Text>
           </View>
           </View>
          
@@ -112,7 +117,7 @@ export default function Book({ route, navigation }) {
           <Ionicons name="ios-star" size={24} color="white" />
           <Ionicons name="ios-star" size={24} color="white" />
           </View>
-          <Text>Excellent book to get you thinking. About half way through. I've had to give up on 1 so far, for which I didn't even understand the solution. It will improve me or dispatch me. </Text>
+          <Text>Good service experienced with this seller. The book matched the description stated and will be looking out for any other books that is listed by this seller.  </Text>
         </View>
   
         </View>

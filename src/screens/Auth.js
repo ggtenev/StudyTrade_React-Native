@@ -79,7 +79,7 @@ export default function Auth() {
     setIsLoading(true);
     if (!firstName || !lastName) {
       setError("Fill in all fields");
-      
+      setIsLoading(false);
       return;
     }
     if(
@@ -90,11 +90,11 @@ export default function Auth() {
       }
     
 
-    //     else if (!email) {
-    //       setError("Password doesn't match");
-    //       setIsLoading(false);
-    //       return;
-    // }
+        else if (!email) {
+          setError("Password doesn't match");
+          setIsLoading(false);
+          return;
+    }
     //  else if (!thought) {
     //       setError("You have to accept the Terms and Conditions");
     //       setIsLoading(false);
@@ -257,9 +257,20 @@ export default function Auth() {
         </View>
         {/* <Button title='back' onPress={() => setSignUpMode(false)}/> */}
         <TouchableOpacity
-          style={styles.btn}
+          style={{...styles.btn,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+            marginBottom: 10,
+          }}
           onPress={() => setSignUpMode(false)}
         >
+           <Ionicons
+              name='ios-arrow-back'
+              size={21}
+              color='black'
+              style={{ position: "relative", top: 1 }}
+            />
           <Text style={styles.top}>Login</Text>
         </TouchableOpacity>
         </View>
@@ -328,6 +339,7 @@ const styles = StyleSheet.create({
   top: {
     fontWeight: "bold",
     fontSize: 18,
+    textAlign:'center'
   },
   input: {
     backgroundColor: Colors.grey,

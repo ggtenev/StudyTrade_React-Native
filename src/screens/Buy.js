@@ -31,7 +31,9 @@ const BookCover = ({ uri, onPress }) => {
 
 export default function Buy({ navigation }) {
   const [search, setSearch] = useState("");
-  const [isVerified, setIsverified] = useState(true)
+
+  //CHECK IF VERIFIED
+  const [isVerified, setIsverified] = useState(false)
   // const [books, setBooks] = useState( )
   const books = useSelector((state) => state.reducer.storeBooks);
 
@@ -95,6 +97,7 @@ export default function Buy({ navigation }) {
       <View style={styles.input}>
         <FontAwesome name='search' size={24} color='black' />
         <TextInput
+        placeholder='Enter ISBN, Author or Title...'
           value={search}
           style={styles.inputField}
           onChangeText={(t) => setSearch(t)}
